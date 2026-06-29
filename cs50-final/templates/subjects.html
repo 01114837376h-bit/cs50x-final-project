@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{% block title %}Subjects{% endblock %}
+
+{% block main %}
+
+<div class="row g-4">
+    <!-- Search panel — narrow left column -->
+    <div class="col-md-3">
+        <div class="card p-3 sticky-top" style="top: 80px;">
+            <h2 class="h6 mb-3 mono" style="color: var(--accent);">
+                <i class="ti ti-filter me-1"></i> Filter subjects
+            </h2>
+            <form action="/subjects" method="get">
+
+                <div class="mb-3">
+                    <label class="form-label">Name or code</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="q"
+                        placeholder="name or code"
+                        value="{{ request.args.get('q', '') }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Year</label>
+                    <select class="form-select" name="year">
+                        <option value="">All years</option>
+                        <option value="1" {% if request.args.get('year') == '1' %}selected{% endif %}>Year 1</option>
+                        <option value="2" {% if request.args.get('year') == '2' %}selected{% endif %}>Year 2</option>
+                        <option value="3" {% if request.args.get('year') == '3' %}selected{% endif %}>Year 3</option>
+                        <option value="4" {% if request.args.get('year') == '4' %}selected{% endif %}>Year 4</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Semester</label>
+                    <select class="form-select" name="semester">
+                        <option value="">All semesters</option>
+                        <option value="1" {% if request.args.get('semester') == '1' %}selected{% endif %}>Semester 1</option>
+                        <option value="2" {% if request.args.get('semester') == '2' %}selected{% endif %}>Semester 2</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-success w-100" type="submit">
+                    <i class="ti ti-search me-1"></i> Search
+                </button>
+
+                {% if request.args.get('q') or request.args.get('year') or request.args.get('semester') %}
+                    <a href="/subjects" class="btn btn-outline-secondary w-100 mt-2">
+                        <i class="ti ti-x me-1"></i> Clear filters
+                    </a>
+                {% endif %}
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Results — wide right column -->
+    <div class="col-md-9">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h5 mb-0">
+                {% if request.args.get('q') or request.args.get('year') or request.args.get('semester') %}
+                    Search results
+                {% else %}
+                    All subjects
+                {% endif %}
+            </h1>
+            <span class="text-muted small mono">
+                {{ subjects|length if subjects else 0 }} subject{{ 's' if not subjects or subjects|length != 1 else '' }} found
+            </span>
+        </div>
+
+        <!-- Results list scrollable -->
+        <div style="max-height: 72vh; overflow-y: auto; padding-right: 4px;">
+
+            {% if subjects %}
+                <div class="row g-3">
+                    {% for subject in subjects %}
+                        <div class="col-12">
+                            <a href="/material?subject_id={{ subject.id }}"
+                               class="text-decoration-none">
+                                <div class="card p-3 sf-card-hover">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                <span class="mono" style="color: var(--accent); font-size:12px;">
+                                                    {{ subject.code }}
+                                                </span>
+                                                <span class="text-muted small">
+                                                    Year {{ subject.year }} &mdash; Semester {{ subject.semester }}
+                                                </span>
+                                            </div>
+                                            <h3 class="h6 mb-1" style="color: var(--text);">
+                                                {{ subject.name }}
+                                            </h3>
+                                            <p class="text-muted small mb-0">
+                                                {{ subject.description if subject.description else "No description available." }}
+                                            </p>
+                                        </div>
+                                        <div class="text-end ms-3 flex-shrink-0">
+                                            <div class="d-flex align-items-center gap-1 justify-content-end mb-1">
+                                                <i class="ti ti-star" style="color: var(--accent); font-size:14px;"></i>
+                                                <span class="small fw-medium" style="color: var(--text);">
+                                                    {{ subject.avg_rating if subject.avg_rating else "—" }}
+                                                </span>
+                                            </div>
+                                            <span class="text-muted" style="font-size:11px;">avg rating</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="ti ti-mood-empty"
+                       style="font-size:40px; color: var(--text-muted);"></i>
+                    <p class="mt-3 mb-0" style="color: var(--text-muted);">
+                        {% if request.args.get('q') or request.args.get('year') or request.args.get('semester') %}
+                            No subjects match your search. Try adjusting the filters.
+                        {% else %}
+                            No subjects available yet.
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,293 @@
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+    --bg:           #f8f9fa;
+    --surface:      #ffffff;
+    --border:       #e2e8f0;
+    --text:         #0f172a;
+    --text-muted:   #64748b;
+    --accent:       #16a34a;
+    --accent-hover: #15803d;
+    --navbar-bg:    #ffffff;
+    --navbar-text:  #0f172a;
+    --code-bg:      #f1f5f9;
+    --shadow:       0 2px 8px rgba(0,0,0,0.06);
+    --shadow-hover: 0 6px 16px rgba(0,0,0,0.10);
+    --radius:       10px;
+    --transition:   0.2s ease;
+}
+
+[data-theme="dark"] {
+    --bg:           #1a1f2e;
+    --surface:      #242938;
+    --border:       #2e3650;
+    --text:         #e2e8f0;
+    --text-muted:   #94a3b8;
+    --accent:       #22c55e;
+    --accent-hover: #16a34a;
+    --navbar-bg:    #242938;
+    --navbar-text:  #e2e8f0;
+    --code-bg:      #1e2538;
+    --shadow:       0 2px 8px rgba(0,0,0,0.3);
+    --shadow-hover: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+
+/* ── Base ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    transition: background-color var(--transition),
+                color var(--transition),
+                border-color var(--transition);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.navbar {
+    background-color: var(--navbar-bg) !important;
+    border-bottom: 1px solid var(--border) !important;
+    box-shadow: var(--shadow);
+}
+
+.navbar-brand {
+    color: var(--navbar-text) !important;
+    font-size: 1.1rem;
+    letter-spacing: -0.3px;
+}
+
+.navbar-brand .brand-accent {
+    color: var(--accent);
+    font-family: 'Courier New', monospace;
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px !important;
+    border-radius: 6px;
+    transition: color var(--transition), background-color var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--accent) !important;
+    background-color: var(--code-bg);
+}
+
+.nav-link.active {
+    color: var(--accent) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--border) !important;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+
+/* ── Theme toggle button ──────────────────────────────────── */
+#theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px 9px;
+    font-size: 16px;
+    line-height: 1;
+    transition: color var(--transition),
+                border-color var(--transition),
+                background-color var(--transition);
+}
+
+#theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background-color: var(--code-bg);
+}
+
+
+/* ── Cards ────────────────────────────────────────────────── */
+.card {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow);
+    color: var(--text) !important;
+}
+
+.sf-card-hover {
+    transition: transform var(--transition), box-shadow var(--transition);
+    cursor: pointer;
+}
+
+.sf-card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.sf-card-hover:active {
+    transform: translateY(-1px);
+}
+
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn-success {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #ffffff !important;
+}
+
+.btn-success:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--border) !important;
+    color: var(--text-muted) !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--code-bg) !important;
+    color: var(--text) !important;
+}
+
+
+/* ── Forms ────────────────────────────────────────────────── */
+.form-control,
+.form-select {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--text) !important;
+    font-size: 14px;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15) !important;
+    background-color: var(--surface) !important;
+    color: var(--text) !important;
+}
+
+.form-label {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.input-group-text {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-muted) !important;
+}
+
+
+/* ── Badges ───────────────────────────────────────────────── */
+.badge {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    border-radius: 5px;
+    padding: 3px 7px;
+}
+
+
+/* ── List groups ──────────────────────────────────────────── */
+.list-group-item {
+    background-color: var(--surface) !important;
+    border-color: var(--border) !important;
+    color: var(--text) !important;
+}
+
+.list-group-item:hover {
+    background-color: var(--code-bg) !important;
+}
+
+
+/* ── Text utilities ───────────────────────────────────────── */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-success {
+    color: var(--accent) !important;
+}
+
+code,
+.mono {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    background-color: var(--code-bg);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+
+/* ── Alert ────────────────────────────────────────────────── */
+.alert-success {
+    background-color: var(--code-bg) !important;
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+}
+
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer {
+    background-color: var(--navbar-bg);
+    border-top: 1px solid var(--border) !important;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.04em;
+}
+
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1rem;
+    }
+}

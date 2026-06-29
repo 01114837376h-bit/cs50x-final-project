@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+
+{% block main %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-0">Welcome back</h1>
+        <p class="text-muted mb-0">{{ session["email"] }}</p>
+    </div>
+</div>
+
+<div class="row g-3 mb-5">
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <p class="text-muted small mb-1">Name</p>
+            <p class="fw-medium mb-0">{{ profile.name if profile.name else "Not set" }}</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <p class="text-muted small mb-1">Email</p>
+            <p class="fw-medium mb-0">{{ profile.email }}</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <p class="text-muted small mb-1">Role</p>
+            <p class="fw-medium mb-0">
+                {% if session["authority"] | int == 1 %}Student
+                {% elif session["authority"] | int == 7 %}Professor
+                {% else %}Admin level {{ session["authority"] | int - 1 }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <p class="text-muted small mb-1">Bio</p>
+            <p class="fw-medium mb-0">{{ profile.bio if profile.bio else "Not set" }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="card p-4 mb-4">
+    <h2 class="h5 mb-4">Update profile</h2>
+    <form action="/home" method="post">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label text-muted small">Name</label>
+                <input
+                    class="form-control"
+                    name="name"
+                    placeholder="Your name"
+                    type="text"
+                    value="{{ profile.name if profile.name else '' }}"/>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-muted small">Email</label>
+                <input
+                    class="form-control"
+                    name="email"
+                    placeholder="Your email"
+                    type="text"
+                    value="{{ profile.email if profile.email else '' }}"/>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-muted small">Role</label>
+                <select class="form-select" name="status">
+                    <option value="" disabled>Select your status</option>
+                    <option value="{{ 1 }}" {% if session["authority"] | int == 1 %}selected{% endif %}>Student</option>
+                    <option value="{{ 2 }}" {% if session["authority"] | int == 2 %}selected{% endif %}>Admin level 1</option>
+                    <option value="{{ 3 }}" {% if session["authority"] | int == 3 %}selected{% endif %}>Admin level 2</option>
+                    <option value="{{ 4 }}" {% if session["authority"] | int == 4 %}selected{% endif %}>Admin level 3</option>
+                    <option value="{{ 5 }}" {% if session["authority"] | int == 5 %}selected{% endif %}>Admin level 4</option>
+                    <option value="{{ 6 }}" {% if session["authority"] | int == 6 %}selected{% endif %}>Admin level 5</option>
+                    <option value="{{ 7 }}" {% if session["authority"] | int == 7 %}selected{% endif %}>Professor</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Save changes</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

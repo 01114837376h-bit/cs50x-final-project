@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}
+login
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">Log In</h1>
+
+    <form action="/" method="post">
+        <div class="mb-3">
+            <input autofocus class="form-control" name="email" placeholder="Email" type="text"/>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" name="password" placeholder="Password" type="password"/>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" name="status">
+                <option value=0 disabled selected>Select your status</option>
+                <option value=1>Student</option>
+                <option value=2>1admin</option>
+                <option value=3>2Admin</option>
+                <option value=4>Moderator</option>
+                <option value=5>2Moderator</option>
+                <option value=6>head</option>
+                <option value=7>Professor</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+
+{% endblock %}
